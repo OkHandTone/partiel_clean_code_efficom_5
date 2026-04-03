@@ -6,3 +6,6 @@ quand on parle de notification on parle d observer, cela permet un declenchement
 Si demain l'entreprise veut ajouter une notification discord ou autres, elle le pourra facilement
 
 il faudra juste créer une nouvelle classe et de l'abonner au Gestionnaire d'Événements et normalement, pas besoin de toucher au code source.
+
+
+j etais partie sur un test avec des buttons en html mais finalement avec les soucis CORS, je n ai pas fait cette methode
