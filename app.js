@@ -9,9 +9,27 @@ class GestionnaireEvenement {
   }
 
   declencher(donnees) {
-    console.log("test_declenchement", `${this.nomEvenement}`);
+    console.log("\ntest_declenchement", `${this.nomEvenement}`);
     this.abonnes.forEach((abonne) => {
       abonne.envoyer(donnees);
     });
+  }
+}
+
+class NotificationEmail {
+  envoyer(donnees) {
+    console.log("notif email");
+  }
+}
+
+class NotificationSMS {
+  envoyer(donnees) {
+    console.log("notif sms");
+  }
+}
+
+class NotificationInterne {
+  envoyer(donnees) {
+    console.log("notif interne");
   }
 }
