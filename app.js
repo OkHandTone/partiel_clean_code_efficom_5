@@ -1,53 +1,33 @@
-class GestionnaireEvenement {
-  constructor(nomEvenement) {
-    this.nomEvenement = nomEvenement;
-    this.abonnes = [];
-  }
+import GestionnaireEvenement from "./observer/GestionnaireEvenement.js";
+import NotificationFactory from "./factory/NotificationFactory.js";
 
-  ajouterAbonne(notification) {
-    this.abonnes.push(notification);
-  }
+const email = NotificationFactory.creer("EMAIL", "Client");
+const emailSupport = NotificationFactory.creer("EMAIL", "Support");
+const sms = NotificationFactory.creer("SMS");
+const interne = NotificationFactory.creer("INTERNE");
 
-  declencher(donnees) {
-    console.log("\ntest_declenchement", `${this.nomEvenement}`);
-    this.abonnes.forEach((abonne) => {
-      abonne.envoyer(donnees);
-    });
-  }
-}
-
-class NotificationEmail {
-  envoyer(donnees) {
-    console.log("notif email");
-  }
-}
-
-class NotificationSMS {
-  envoyer(donnees) {
-    console.log("notif sms");
-  }
-}
-
-class NotificationInterne {
-  envoyer(donnees) {
-    console.log("notif interne");
-  }
-}
-
-const email = new NotificationEmail();
-const sms = new NotificationSMS();
-const interne = new NotificationInterne();
-
-const NvCommande = new GestionnaireEvenement("nv_commande");
-const ExpeColis = new GestionnaireEvenement("ex_colis");
+const NvCommande = new GestionnaireEvenement("NOUVELLE COMMANDE");
+const ExpeColis = new GestionnaireEvenement("EXPÉDITION COLIS");
+const PaiementRefuse = new GestionnaireEvenement("PAIEMENT REFUSÉ");
 
 NvCommande.ajouterAbonne(email);
 NvCommande.ajouterAbonne(interne);
-
 ExpeColis.ajouterAbonne(sms);
+PaiementRefuse.ajouterAbonne(emailSupport);
 
-console.log("client passe commande");
-NvCommande.declencher({ idCommande: "nv_commande", montant: 1500 });
+console.log("SCÉNARIO 1 : Un client passe une commande classique (999€)");
+NvCommande.declencher({ idCommande: "CMD-999", montant: 999 });
 
-console.log("préparateur valide l'expédition...");
-ExpeColis.declencher({ idCommande: "expedition_nv_commande" });
+console.log("\nSCÉNARIO 2 : Un client passe une très grosse commande (1001€)");
+NvCommande.declencher({ idCommande: "CMD-1001", montant: 1001 });
+
+console.log("\nSCÉNARIO 3 : Le préparateur de commande expédie le colis");
+ExpeColis.declencher({ idCommande: "CMD-test_expe" });
+
+console.log(
+  "\n❌ SCÉNARIO 4 : Le paiement par carte bancaire du client échoue",
+);
+PaiementRefuse.declencher({
+  idCommande: "CMD-pas_asseez_fond",
+  raison: "Fonds insuffisants",
+});
