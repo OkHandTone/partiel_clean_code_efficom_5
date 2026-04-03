@@ -24,9 +24,7 @@ NvCommande.declencher({ idCommande: "CMD-1001", montant: 1001 });
 console.log("\nSCÉNARIO 3 : Le préparateur de commande expédie le colis");
 ExpeColis.declencher({ idCommande: "CMD-test_expe" });
 
-console.log(
-  "\n❌ SCÉNARIO 4 : Le paiement par carte bancaire du client échoue",
-);
+console.log("\n SCÉNARIO 4 : Le paiement par carte bancaire du client échoue");
 PaiementRefuse.declencher({
   idCommande: "CMD-pas_asseez_fond",
   raison: "Fonds insuffisants",
